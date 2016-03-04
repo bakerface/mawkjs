@@ -22,27 +22,16 @@
  */
 
 var mawk = require('..');
-var should = require('should');
+
+require('should');
 
 describe('mawk.args(fn)', function() {
-  it('should throw an error if the function is undefined', function(done) {
-    try {
-      mawk.args();
-    }
-    catch (e) {
-      should(e).be.instanceOf(mawk.FunctionUndefinedError);
-      done();
-    }
+  it('should return an empty list if the function is undefined', function() {
+    mawk.args().should.eql([]);
   });
 
-  it('should throw an error if the function is invalid', function(done) {
-    try {
-      mawk.args('invalid');
-    }
-    catch (e) {
-      should(e).be.instanceOf(mawk.FunctionInvalidError);
-      done();
-    }
+  it('should return an empty list if the function is invalid', function() {
+    mawk.args('invalid').should.eql([]);
   });
 
   it('should return an empty list if there are no arguments', function() {
