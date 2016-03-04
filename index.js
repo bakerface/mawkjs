@@ -28,17 +28,18 @@ var R_COMMA = /\s*,\s*/g;
 
 var mawk = module.exports = { };
 
-mawk.FunctionUndefinedError = function() {
-  Error.captureStackTrace(this, this.constructor);
-  this.name = 'FunctionUndefinedError';
-  this.message = 'A function must be defined.';
+mawk.createError = function(name, message) {
+  var error = this[name] = function() {
+    Error.captureStackTrace(this, this.constructor);
+    this.name = name;
+    this.message = message;
+  };
+
+  return error;
 };
 
-mawk.FunctionInvalidError = function() {
-  Error.captureStackTrace(this, this.constructor);
-  this.name = 'FunctionInvalidError';
-  this.message = 'A valid function must be defined.';
-};
+mawk.createError('FunctionUndefinedError', 'A function must be defined.');
+mawk.createError('FunctionInvalidError', 'A valid function must be defined.');
 
 mawk.args = function(fn) {
   if (typeof fn === 'undefined') {
