@@ -21,43 +21,4 @@
  *
  */
 
-var R_LINE_COMMENTS = /\/\/.*$/g;
-var R_BLOCK_COMMENTS = /\/\*[\s\S]*?\*\//g;
-var R_FUNCTION_ARGS = /function[^\(]*\(([^\)]*)\)/;
-var R_COMMA = /\s*,\s*/g;
-
-var mawk = module.exports = { };
-
-mawk.createError = function(name, message) {
-  var error = this[name] = function() {
-    Error.captureStackTrace(this, this.constructor);
-    this.name = name;
-    this.message = message;
-  };
-
-  return error;
-};
-
-mawk.createError('FunctionUndefinedError', 'A function must be defined.');
-mawk.createError('FunctionInvalidError', 'A valid function must be defined.');
-
-mawk.args = function(fn) {
-  if (typeof fn === 'undefined') {
-    throw new mawk.FunctionUndefinedError();
-  }
-
-  if (typeof fn !== 'function') {
-    throw new mawk.FunctionInvalidError();
-  }
-
-  var match = fn.toString()
-    .replace(R_LINE_COMMENTS, '')
-    .replace(R_BLOCK_COMMENTS, '')
-    .match(R_FUNCTION_ARGS)[1];
-
-  if (match) {
-    return match.split(R_COMMA);
-  }
-
-  return [];
-};
+module.exports.args = require('./args');
