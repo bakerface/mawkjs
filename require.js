@@ -22,6 +22,7 @@
  */
 
 module.exports = function(name, path) {
-  var key = this.sanitize(name);
-  this.dependencies[key] = require(path || name);
+  return this.factory(name, function() {
+    return require(path || name);
+  });
 };
