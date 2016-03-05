@@ -11,6 +11,8 @@
 #### Table of Contents
 [#](#mawkargsfn) **mawk**.args(*fn*) - returns argument names for a function.
 <br>
+[#](#mawkasnamevalue) **mawk**.as(*name*, *value*) - create a mock from a value.
+<br>
 [#](#mawkrequirename) **mawk**.require(*name*) - create a mock from a module.
 <br>
 [#](#mawkresolvename) **mawk**.resolve(*name*) - returns the value of a mock.
@@ -32,6 +34,24 @@ function sum(one, two) {
 
 mock.args(sum);
 // => [ 'one', 'two' ]
+```
+
+### mawk.as(name, value)
+[![stability](https://img.shields.io/badge/stability-experimental-orange.svg)](#mawkasnamevalue)
+
+Creates a mock with specified `name` that resolves to the specified `value`.
+
+``` javascript
+var mock = require('mawk');
+
+// pass name and value together
+mock.as('one', 1);
+
+// or pass name then value
+mock('one').as(1);
+
+mock.resolve('one');
+// => 1
 ```
 
 ### mawk.require(name)
@@ -63,11 +83,14 @@ Returns the value of the mock with the specified `name`.
 ``` javascript
 var mock = require('mawk');
 
-// create a mock redis client
-mock('redis').require('fakeredis');
+mock('one').as(1);
+mock('two').as(2);
 
-mock.resolve('redis');
-// => require('fakeredis')
+mock.resolve('one');
+// => 1
+
+mock.resolve('two');
+// => 2
 ```
 
 ### mawk.sanitize(name)
