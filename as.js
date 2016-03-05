@@ -22,5 +22,7 @@
  */
 
 module.exports = function(name, value) {
-  this.dependencies[name] = value;
+  return this.factory(name, function() {
+    return value;
+  });
 };
