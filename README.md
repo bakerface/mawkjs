@@ -11,7 +11,7 @@
 #### Table of Contents
 [#](#mawkargsfn) **mawk**.args(*fn*) - returns argument names for a function.
 <br>
-[#](#mawkasnamevalue) **mawk**.as(*name*, *value*) - create a mock from a value.
+[#](#mawkasname-value) **mawk**.as(*name*, *value*) - create a mock from a value.
 <br>
 [#](#mawkrequirename) **mawk**.require(*name*) - create a mock from a module.
 <br>
@@ -37,7 +37,7 @@ mock.args(sum);
 ```
 
 ### mawk.as(name, value)
-[![stability](https://img.shields.io/badge/stability-experimental-orange.svg)](#mawkasnamevalue)
+[![stability](https://img.shields.io/badge/stability-experimental-orange.svg)](#mawkasname-value)
 
 Creates a mock with specified `name` that resolves to the specified `value`.
 
