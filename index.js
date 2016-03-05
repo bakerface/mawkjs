@@ -22,17 +22,20 @@
  */
 
 var args = require('./args');
+var as = require('./as');
 var _require = require('./require');
 var resolve = require('./resolve');
 var sanitize = require('./sanitize');
 
 module.exports = function(name) {
   return {
+    as: as.bind(module.exports, name),
     require: _require.bind(module.exports, name)
   };
 };
 
 module.exports.args = args;
+module.exports.as = as;
 module.exports.dependencies = { };
 module.exports.require = _require;
 module.exports.resolve = resolve;
