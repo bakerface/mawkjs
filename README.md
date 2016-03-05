@@ -11,20 +11,85 @@
 #### Table of Contents
 [#](#mawkargsfn) **mawk**.args(*fn*) - returns argument names for a function.
 <br>
+[#](#mawkrequirename) **mawk**.require(*name*) - create a mock from a module.
+<br>
+[#](#mawkresolvename) **mawk**.resolve(*name*) - returns the value of a mock.
+<br>
+[#](#mawksanitizename) **mawk**.sanitize(*name*) - returns a safe mock name.
+<br>
 
 ### mawk.args(fn)
-[![version](https://img.shields.io/badge/version-0.0.0-green.svg)](#mawkargsfn)
 [![stability](https://img.shields.io/badge/stability-experimental-orange.svg)](#mawkargsfn)
 
 Returns the argument names for the function `fn` as an array of strings.
 
 ``` javascript
-var mawk = require('mawk');
+var mock = require('mawk');
 
-function sum(a, b) {
-  return a + b;
+function sum(one, two) {
+  return one + two;
 }
 
-mawk.args(sum);
-// => [ 'a', 'b' ]
+mock.args(sum);
+// => [ 'one', 'two' ]
+```
+
+### mawk.require(name)
+[![stability](https://img.shields.io/badge/stability-experimental-orange.svg)](#mawkrequirename)
+
+Creates a mock from the module with specified `name`.
+
+``` javascript
+var mock = require('mawk');
+
+// in production
+mock.require('redis');
+
+mock.resolve('redis');
+// => require('redis')
+
+// in development
+mock('redis').require('fakeredis');
+
+mock.resolve('redis');
+// => require('fakeredis')
+```
+
+### mawk.resolve(name)
+[![stability](https://img.shields.io/badge/stability-experimental-orange.svg)](#mawkresolvename)
+
+Returns the value of the mock with the specified `name`.
+
+``` javascript
+var mock = require('mawk');
+
+// create a mock redis client
+mock('redis').require('fakeredis');
+
+mock.resolve('redis');
+// => require('fakeredis')
+```
+
+### mawk.sanitize(name)
+[![stability](https://img.shields.io/badge/stability-experimental-orange.svg)](#mawksanitizename)
+
+Returns a sanitized version of `name` suitable for use as a JavaScript function argument.
+
+``` javascript
+var mock = require('mawk');
+
+mock.sanitize('express');
+// => 'express'
+
+mock.sanitize('!safe');
+// => 'safe'
+
+mock.sanitize('body-parser');
+// => 'bodyParser'
+
+mock.sanitize('@bakerface/mawkjs');
+// => 'mawkjs'
+
+mock.sanitize('/path/to/file.js');
+// => 'file'
 ```
