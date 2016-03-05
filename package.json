@@ -1,6 +1,6 @@
 {
   "name": "mawk",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Dependency injection and mocking for Node.js",
   "main": "index.js",
   "keywords": [
