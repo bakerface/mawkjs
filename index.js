@@ -23,20 +23,27 @@
 
 var args = require('./args');
 var as = require('./as');
+var factory = require('./factory');
 var _require = require('./require');
 var resolve = require('./resolve');
 var sanitize = require('./sanitize');
 
 module.exports = function(name) {
   return {
+    args: args.bind(module.exports),
     as: as.bind(module.exports, name),
-    require: _require.bind(module.exports, name)
+    dependencies: module.exports.dependencies,
+    factory: factory.bind(module.exports, name),
+    require: _require.bind(module.exports, name),
+    resolve: resolve.bind(module.exports),
+    sanitize: sanitize.bind(module.exports)
   };
 };
 
 module.exports.args = args;
 module.exports.as = as;
 module.exports.dependencies = { };
+module.exports.factory = factory;
 module.exports.require = _require;
 module.exports.resolve = resolve;
 module.exports.sanitize = sanitize;
