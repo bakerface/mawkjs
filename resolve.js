@@ -21,6 +21,12 @@
  *
  */
 
-module.exports = function(name) {
-  return this.dependencies[name];
+var resolve = module.exports = function(name) {
+  var key = this.sanitize(name);
+  var dep = this.dependencies[key];
+
+  if (dep) {
+    var args = dep.args.map(resolve.bind(this));
+    return dep.fn.apply(this, args);
+  }
 };
