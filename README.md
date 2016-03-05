@@ -13,6 +13,8 @@
 <br>
 [#](#mawkasname-value) **mawk**.as(*name*, *value*) - create a mock from a value.
 <br>
+[#](#mawkfactoryname-fn) **mawk**.factory(*name*, *fn*) - create a mock from a factory function.
+<br>
 [#](#mawkrequirename) **mawk**.require(*name*) - create a mock from a module.
 <br>
 [#](#mawkresolvename) **mawk**.resolve(*name*) - returns the value of a mock.
@@ -52,6 +54,32 @@ mock('one').as(1);
 
 mock.resolve('one');
 // => 1
+```
+
+### mawk.factory(name, fn)
+[![stability](https://img.shields.io/badge/stability-experimental-orange.svg)](#mawkfactoryname-fn)
+
+Creates a mock with specified `name` that resolves to the value returned from
+the function `fn`.
+
+``` javascript
+var mock = require('mawk');
+
+mock('one').as(1);
+mock('two').as(2);
+
+function three(one, two) {
+  return one + two;
+}
+
+// pass name and function together
+mock.factory('three', three);
+
+// or pass name then function
+mock('three').factory(three);
+
+mock.resolve('three');
+// => 3
 ```
 
 ### mawk.require(name)
